@@ -1,0 +1,12 @@
+{
+    "view": {
+        "title": "Tools",
+        "slug": "tools",
+		"permissions": {
+            "tools": {
+                "minlevel": "1",
+                "redirect": "index.php?view=register&layout=login"
+            }
+        }
+    }
+}

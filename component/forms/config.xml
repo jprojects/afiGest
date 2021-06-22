@@ -1,0 +1,39 @@
+<form>
+    <field name="show_coins">
+      <type>list</type>
+      <name>show_coins</name>
+      <id>show_coins</id>
+      <label>CW_CONFIG_SHOW_COINS</label>
+      <message>CW_CONFIG_SHOW_COINS_MSG</message>
+      <default>0</default>
+      <option value="0">CW_NO</option>
+      <option value="1">CW_YES</option>
+    </field>
+    <field name="show_quotes">
+      <type>list</type>
+      <name>show_quotes</name>
+      <id>show_quotes</id>
+      <label>CW_CONFIG_SHOW_QUOTES</label>
+      <message>CW_CONFIG_SHOW_QUOTES_MSG</message>
+      <default>0</default>
+      <option value="0">CW_NO</option>
+      <option value="1">CW_YES</option>
+    </field>
+    <field name="auth_token">
+      <type>hidden</type>
+      <name>auth_token</name>
+      <id>auth_token</id>
+      <message></message>
+      <placeholder></placeholder>
+      <onchange></onchange>
+      <disabled>false</disabled>
+    </field>
+    <field name="submit">
+        <id>btnSubmit</id>
+        <onclick>this.form.submit();</onclick>
+        <size>medium</size>
+        <color>success</color>
+        <value>CW_SAVE</value>
+        <disabled>false</disabled>
+    </field>
+</form>

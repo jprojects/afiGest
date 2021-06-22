@@ -1,0 +1,47 @@
+<form>
+    <field name="nom">
+        <type>text</type>
+        <name>nom</name>
+        <id>nom</id>
+        <label></label>
+        <message></message>
+        <placeholder>Nom Projecte</placeholder>
+        <onchange></onchange>
+    </field>
+    <field name="abreujatura">
+        <type>text</type>
+        <name>abreujatura</name>
+        <id>abreujatura</id>
+        <label></label>
+        <message></message>
+        <placeholder>Abreviació</placeholder>
+        <onchange></onchange>
+    </field>
+    <field name="slack_channel">
+        <type>text</type>
+        <name>slack_channel</name>
+        <id>slack_channel</id>
+        <label></label>
+        <message></message>
+        <placeholder>Canal de Slack</placeholder>
+        <onchange></onchange>
+    </field>
+    <field name="ref_externa">
+        <type>text</type>
+        <name>ref_externa</name>
+        <id>ref_externa</id>
+        <label></label>
+        <message></message>
+        <placeholder>Ref. Externa</placeholder>
+        <onchange></onchange>
+    </field>
+    <field name="observacions">
+        <type>textarea</type>
+        <name>observacions</name>
+        <id>observacions</id>
+        <label></label>
+        <message></message>
+        <placeholder>Observacions</placeholder>
+        <onchange></onchange>
+    </field>
+</form>

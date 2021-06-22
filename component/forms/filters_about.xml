@@ -1,0 +1,24 @@
+<form>
+    <!-- buttons -->
+     <button name="btn_log">
+        <id>btn_log</id>
+        <class></class>
+        <label>Changelog</label>
+        <icon>fa-file</icon>
+        <href>index.php?view=about&amp;layout=log</href>
+    </button>
+    <button name="btn_api">
+        <id>btn_api</id>
+        <class></class>
+        <label>API</label>
+        <icon>fa-database</icon>
+        <href>index.php?view=about&amp;layout=api</href>
+    </button>
+    <button name="btn_coins">
+        <id>btn_coins</id>
+        <class></class>
+        <label>Coins</label>
+        <icon>fa-money</icon>
+        <href>index.php?view=about&amp;layout=coins</href>
+    </button>
+</form>
