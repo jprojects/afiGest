@@ -169,6 +169,21 @@ abstract class factory
       return $instance;
     }
 
+    /**
+     * Method to get a instance of the filesystem class
+     * @return object
+    */
+    public static function getFilesystem()
+    {
+      $path = dirname(__FILE__).'/filesystem.php';
+    	if (file_exists($path))
+  		{
+  			include_once $path;
+  			$instance = new Filesystem;
+  		}
+      return $instance;
+    }
+
      /**
      * Method to get a instance of the sef class
      * @return object
