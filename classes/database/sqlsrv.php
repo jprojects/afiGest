@@ -23,10 +23,28 @@ class Afisqlsrv {
      * Constructor
     */
     function __construct() {
+
         $config = factory::getConfig();
-		$connectionInfo = array( "Database"=>$config->database, "UID"=>$config->user, "PWD"=>$config->pass, "CharacterSet" => 'UTF-8');
-		$this->connection_id = sqlsrv_connect( $config->host, $connectionInfo);	
-	return $this->connection_id;
+
+		$this->connection_id = $this->connectDB($config->host, $config->user, $config->pass, $config->database);
+		
+		return $this->connection_id;
+    }
+
+    /**
+     * Method to connect a database
+     * @param $host
+     * @param $user
+     * @param $pass
+     * @param $database
+     * @since 1.0
+    */
+    public function connectDB($host, $user, $pass, $database)
+    {
+        $connectionInfo = array( "Database"=>$database, "UID"=>$user, "PWD"=>$pass, "CharacterSet" => 'UTF-8');
+		$this->connection_id = sqlsrv_connect( $host, $connectionInfo);	
+
+	    return $this->connection_id;
     }
 	
     /**
@@ -38,7 +56,10 @@ class Afisqlsrv {
         	$config = factory::getConfig();
 	    	$this->last_query = str_replace('#_', $config->dbprefix, $query);
 	    	$this->num_queries++;
-		$this->result = sqlsrv_query( $this->connection_id, $this->last_query);
+		    $this->result = sqlsrv_query( $this->connection_id, $this->last_query);
+            if( $this->result === false ) {
+                die( print_r( sqlsrv_errors(), true));
+           }
 	    	return $this->result;
   	}
     
@@ -118,9 +139,9 @@ class Afisqlsrv {
     */
     function updateField($table, $field, $value, $idField, $id) {
         $config = factory::getConfig();
-	if(strtotime($field) !== false) {
-			str_replace('-', '', $field);
-	}
+        if(strtotime($field) !== false) {
+                str_replace('-', '', $field);
+        }
         $query = "UPDATE ".str_replace('#_', $config->dbprefix, $table)." SET ";        
         $value = "$field"." = ".$this->quote(trim($value), false)."";
         $query .= $value." WHERE $idField = ".$this->quote($id);
@@ -221,7 +242,7 @@ class Afisqlsrv {
     */
   	function affected_rows(  )
   	{
-		sqlsrv_rows_affected($this->result);
+		return sqlsrv_rows_affected($this->result);
   	}
       
     /**
@@ -231,7 +252,7 @@ class Afisqlsrv {
     */
     function getError()
     {
-	return sqlsrv_errors();
+	    return sqlsrv_errors();
     }
     
     /**
@@ -239,7 +260,7 @@ class Afisqlsrv {
     */
     function free()
     {
-	return sqlsrv_free_stmt($this->result);
+	    return sqlsrv_free_stmt($this->result);
     }
     
     /**
@@ -248,7 +269,7 @@ class Afisqlsrv {
     */
     function close()
     {
-	return sqlsrv_close($this->connection_id);
+	    return sqlsrv_close($this->connection_id);
     }
 }
 

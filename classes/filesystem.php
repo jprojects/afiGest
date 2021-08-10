@@ -46,4 +46,22 @@ class Filesystem
         $app->setMessage($msg, $type);
     }
 
+    /**
+     * Method to read files from a given folder
+     * @param $dir string the folder path
+    **/
+    public function getFiles($dir)
+    {
+        if (is_dir($dir)) {
+            if ($dh = opendir($dir)) {
+                while (($file = readdir($dh)) !== false) {
+                    $files[] = $file;
+                }
+                closedir($dh);
+            }
+
+            return $files;
+        }
+    }
+
 }

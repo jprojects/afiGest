@@ -26,7 +26,22 @@ class Afimysqli {
     
         $config = factory::getConfig();
 
-        $this->connection_id = new mysqli ( $config->host, $config->user, $config->pass, $config->database );
+        $this->connection_id = $this->connectDB($config->host, $config->user, $config->pass, $config->database);
+		
+		return $this->connection_id;
+    }
+
+    /**
+     * Method to connect a database
+     * @param $host
+     * @param $user
+     * @param $pass
+     * @param $database
+     * @since 1.0
+    */
+    public function connectDB($host, $user, $pass, $database)
+    {
+        $this->connection_id = new mysqli ( $host, $user, $pass, $database );
     	
 		if ($this->connection_id->connect_errno) {
 			die('Connect Error (' . $this->connection_id->connect_errno . ') '. mysqli_connect_error);
@@ -44,7 +59,7 @@ class Afimysqli {
      * @param $query
      * @since 1.0
     */
-    function query( $query ) {
+    public function query( $query ) {
     
         $config = factory::getConfig();
 	    $this->last_query = str_replace('#_', $config->dbprefix, $query);

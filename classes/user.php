@@ -32,12 +32,6 @@ class User
     public $bio             = '';
     public $template        = 'green';
     public $apikey          = '';
-    public $projects        = '';
-    public $coins           = 0;
-    public $wallet          = '';
-    public $nou             = 0;
-    public $editar          = 0;
-    public $esborrar        = 0;
 
     /**
      * Constructor
@@ -97,7 +91,7 @@ class User
         $_SESSION['cw_userid'] = $id;
 
         $db  = factory::getDatabase();
-        $db->query('SELECT u.*,g.nou,g.editar,g.esborrar FROM `#_users` AS u INNER JOIN `#_usergroups` AS g ON u.level = g.id WHERE u.id = '.(int)$id);
+        $db->query('SELECT u.* FROM `#_users` AS u WHERE u.id = '.(int)$id);
         $row = $db->fetchArray();
 
         foreach($row as $k => $v) {
@@ -113,7 +107,7 @@ class User
     function getUserObject($id)
     {
         $db  = factory::getDatabase();
-        $db->query('SELECT u.*,g.nou,g.editar,g.esborrar FROM `#_users` AS u INNER JOIN `#_usergroups` AS g ON u.level = g.id WHERE u.id = '.(int)$id);
+        $db->query('SELECT u.* FROM `#_users` AS u WHERE u.id = '.(int)$id);
         $row = $db->fetchObject();
 
         return $row;

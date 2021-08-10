@@ -280,12 +280,14 @@ class Html
 				$field[0]->readonly == 'true' ? $readonly = "readonly='true'" : $readonly = "";
                 $field[0]->disabled == 'true' ? $disabled = "disabled='disabled'" : $disabled = "";
                 $field[0]->onchange != "" ? $onchange = 'onchange="'.$field[0]->onchange.'"' : $onchange = "";
+                $field[0]->required == 'true' ? $required = "required='true'" : $required = "";
+                $field[0]->required == 'true' ? $star = " (*)" : $star = "";
                 $field[0]->onkeyup != "" ? $onkeyup = " onkeyup='".$field[0]->onkeyup."'" : $onkeyup = "";
                 if($field[0]->type != 'hidden') $html .= "<div id='".$field[0]->name."-field' class='mb-3'>";
-                if($field[0]->type != 'hidden' && $field[0]->label != "") $html .= "<label for='".$field[0]->id."'><a class='hasTip' title='".$lang->get($field[0]->placeholder)."'>".$lang->get($field[0]->label)."</a></label>";
+                if($field[0]->type != 'hidden' && $field[0]->label != "") $html .= "<label for='".$field[0]->id."'><a class='hasTip' title='".$lang->get($field[0]->placeholder)."'>".$lang->get($field[0]->label).$star."</a></label>";
                 if($field[0]->type != 'hidden' && $field[0]->label != "") $html .= "<div class='controls'>";
                 $html .= "<input type='".$field[0]->type."' id='".$field[0]->id."' value='".str_replace("'","&#39;",$default)."' name='".$field[0]->name."'";
-                if($field[0]->type != 'hidden') $html .= $disabled." ".$onchange." ".$onkeyup." ".$readonly." placeholder='".$lang->get($field[0]->placeholder)."' class='form-control ".$field[0]->clase."' autocomplete='off'";
+                if($field[0]->type != 'hidden') $html .= $disabled." ".$onchange." ".$required." ".$onkeyup." ".$readonly." placeholder='".$lang->get($field[0]->placeholder)."' class='form-control ".$field[0]->clase."' autocomplete='off'";
                 $html .= ">";
                 //if($field[0]->type != 'hidden') $html .= "<span id='".$field[0]->name."-msg'></span>";
                 if($field[0]->type != 'hidden' && $field[0]->label != "") $html .= "</div>";
@@ -314,10 +316,11 @@ class Html
             if($field['name'] == $name) {
                 $field[0]->disabled == 'true' ? $disabled = "disabled='disabled'" : $disabled = "";
                 $field[0]->required == 'true' ? $required = "required='true'" : $required = "";
+                $field[0]->required == 'true' ? $star = " (*)" : $star = "";
                 $field[0]->onchange != "" ? $onchange = "onchange='".$field[0]->onchange."'" : $onchange = "";
                 $field[0]->onkeyup != "" ? $onkeyup = " onkeyup='".$field[0]->onkeyup."'" : $onkeyup = "";
                 $html .= "<div id='".$field[0]->name."-field' class='mb-3'>";
-                if($field[0]->label != "") $html .= "<label for='".$field[0]->id."'><a class='hasTip' title='".$lang->get($field[0]->placeholder)."'>".$lang->get($field[0]->label)."</a></label>";
+                if($field[0]->label != "") $html .= "<label for='".$field[0]->id."'><a class='hasTip' title='".$lang->get($field[0]->placeholder)."'>".$lang->get($field[0]->label).$star."</a></label>";
                 if($field[0]->label != "") $html .= "<div class='controls'>";
                 $html .= "<input type='".$field[0]->type."' name='".$field[0]->name."' style='display:none;' />";
                 $html .= "<input type='".$field[0]->type."' id='".$field[0]->id."' value='".$default."' name='".$field[0]->name."'";
@@ -350,15 +353,16 @@ class Html
             if($field['name'] == $name) {
                 $field[0]->disabled == 'true' ? $disabled = "disabled='disabled'" : $disabled = "";
                 $field[0]->required == 'true' ? $required = "required='true'" : $required = "";
+                $field[0]->required == 'true' ? $star = " (*)" : $star = "";
                 $field[0]->onchange != "" ? $onchange = "onchange='".$field[0]->onchange."'" : $onchange = "";
                 $field[0]->onkeyup != "" ? $onkeyup = " onkeyup='".$field[0]->onkeyup."'" : $onkeyup = "";
                 $html .= "<div id='".$field[0]->name."-field' class='mb-3'>";
-                if($field[0]->label != "") $html .= "<label for='".$field[0]->id."'><a class='hasTip' title='".$lang->get($field[0]->placeholder)."'>".$lang->get($field[0]->label)."</a></label>";
+                if($field[0]->label != "") $html .= "<label for='".$field[0]->id."'><a class='hasTip' title='".$lang->get($field[0]->placeholder)."'>".$lang->get($field[0]->label).$star."</a></label>";
                 if($field[0]->label != "") $html .= "<div class='controls'>";
                 $html .= "<input type='".$field[0]->type."' name='".$field[0]->name."' style='display:none;' />";
                 $html .= "<input type='".$field[0]->type."' data-minlength='".$field[0]->minlength."' id='".$field[0]->id."' value='".$default."' name='".$field[0]->name."'";
                 if($field[0]->match != '') { $html .= "data-match='".$field[0]->match."' "; }
-                $html .= $disabled.' '.$required.' data-error="'.$lang->get($field[0]->message).'" '.$onchange.$onkeyup.' placeholder="'.$lang->get($field[0]->placeholder).'" class="form-control '.$field[0]->clase.'" autocomplete="off"';
+                $html .= $disabled.' '.$required.' '.$onchange.$onkeyup.' placeholder="'.$lang->get($field[0]->placeholder).'" class="form-control '.$field[0]->clase.'" autocomplete="off"';
                 $html .= ">";
                 if($field[0]->label != "") $html .= "</div>";
                 $html .= "<div id='".$field[0]->name."Help' class='form-text'>".$lang->get($field[0]->message)."</div><div class='invalid-feedback'>".$lang->get($field[0]->invalid)."</div></div>";
@@ -386,11 +390,47 @@ class Html
             if($field['name'] == $name) {
 				$field[0]->readonly == 'true' ? $readonly = "readonly='true'" : $readonly = "";
                 $field[0]->disabled == 'true' ? $disabled = "disabled='disabled'" : $disabled = "";
+                $field[0]->required == 'true' ? $required = "required='true'" : $required = "";
+                $field[0]->required == 'true' ? $star = " (*)" : $star = "";
                 $html .= "<div id='".$field[0]->name."-field' class='mb-3'>";
-                if($field[0]->label != "") $html .= "<label for='".$field[0]->id."'><a class='hasTip' title='".$lang->get($field[0]->placeholder)."'>".$lang->get($field[0]->label)."</a></label>";
+                if($field[0]->label != "") $html .= "<label for='".$field[0]->id."'><a class='hasTip' title='".$lang->get($field[0]->placeholder)."'>".$lang->get($field[0]->label).$star."</a></label>";
                 $html .= "<div class='input-group' id='".$field[0]->id."-icon'>";
                 $html .= "<input type='date' id='".$field[0]->id."' value='".$default."' name='".$field[0]->name."'";
-                $html .= $disabled." ".$readonly." class='form-control' autocomplete='off'>";
+                $html .= $disabled." ".$readonly." ".$required." class='form-control' autocomplete='off'>";
+                $html .= "<span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>";
+                $html .= "</div>";
+                $html .= "<div id='".$field[0]->name."Help' class='form-text'>".$lang->get($field[0]->message)."</div><div class='invalid-feedback'>".$lang->get($field[0]->invalid)."</div></div>";
+            }
+        }
+        return $html;
+    }
+
+    /**
+     * Method to render a input box
+     * @param $form string the form name
+     * @param $name string the field name
+     * @param $default mixed optional default value
+     * @return $html string a complete input field html
+    */
+    function getDateTimeField($form, $name, $default='')
+    {
+        $app    = factory::getApplication();
+        $lang   = factory::getLanguage();
+
+        $html = "";
+
+        foreach($this->getForm($form) as $field) {
+            //text inputs...
+            if($field['name'] == $name) {
+				$field[0]->readonly == 'true' ? $readonly = "readonly='true'" : $readonly = "";
+                $field[0]->disabled == 'true' ? $disabled = "disabled='disabled'" : $disabled = "";
+                $field[0]->required == 'true' ? $required = "required='true'" : $required = "";
+                $field[0]->required == 'true' ? $star = " (*)" : $star = "";
+                $html .= "<div id='".$field[0]->name."-field' class='mb-3'>";
+                if($field[0]->label != "") $html .= "<label for='".$field[0]->id."'><a class='hasTip' title='".$lang->get($field[0]->placeholder)."'>".$lang->get($field[0]->label).$star."</a></label>";
+                $html .= "<div class='input-group' id='".$field[0]->id."-icon'>";
+                $html .= "<input type='time' id='".$field[0]->id."' value='".$default."' name='".$field[0]->name."'";
+                $html .= $disabled." ".$readonly." ".$required." class='form-control' autocomplete='off'>";
                 $html .= "<span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>";
                 $html .= "</div>";
                 $html .= "<div id='".$field[0]->name."Help' class='form-text'>".$lang->get($field[0]->message)."</div><div class='invalid-feedback'>".$lang->get($field[0]->invalid)."</div></div>";
@@ -419,11 +459,13 @@ class Html
                 $field[0]->disabled == 'true' ? $disabled = "disabled='disabled'" : $disabled = "";
                 $field[0]->onchange != "" ? $onchange = " onchange='".$field[0]->onchange."'" : $onchange = "";
                 $field[0]->onkeyup != "" ? $onkeyup = " onkeyup='".$field[0]->onkeyup."'" : $onkeyup = "";
+                $field[0]->required == 'true' ? $required = "required='true'" : $required = "";
+                $field[0]->required == 'true' ? $star = " (*)" : $star = "";
                 $html .= "<div id='".$field[0]->name."-field' class='mb-3'>";
-                $html .= "<label for='".$field[0]->id."'><a class='hasTip' title='".$lang->get($field[0]->placeholder)."'>".$lang->get($field[0]->label)."</a></label>";
+                $html .= "<label for='".$field[0]->id."'><a class='hasTip' title='".$lang->get($field[0]->placeholder)."'>".$lang->get($field[0]->label).$star."</a></label>";
                 $html .= "<div class='controls'>";
                 $html .= "<input type='".$field[0]->type."' name='".$field[0]->name."' id='".$field[0]->id."' value='".$default."'";
-                $html .= $disabled.$onchange.$onkeyup.' class="form-control">';
+                $html .= $disabled.' '.$onchange.' '.$onkeyup.' '.$required.' class="form-control">';
                 $html .= "</div>";
                 $html .= "<div id='".$field[0]->name."Help' class='form-text'>".$lang->get($field[0]->message)."</div><div class='invalid-feedback'>".$lang->get($field[0]->invalid)."</div></div>";
             }
@@ -450,11 +492,13 @@ class Html
             if($field['name'] == $name) {
                 $field[0]->disabled == 'true' ? $disabled = "disabled='disabled'" : $disabled = "";
                 $field[0]->onchange != "" ? $onchange = "onchange='".$field[0]->onchange."'" : $onchange = "";
+                $field[0]->required == 'true' ? $required = "required='true'" : $required = "";
+                $field[0]->required == 'true' ? $star = " (*)" : $star = "";
 
                 $html .= "<div id='".$field[0]->name."-field' class='mb-3'>";
-                if($field[0]->label != "") $html .= "<label for='".$field[0]->id."'><a class='hasTip' title='".$lang->get($field[0]->placeholder)."'>".$lang->get($field[0]->label)."</a></label>";
+                if($field[0]->label != "") $html .= "<label for='".$field[0]->id."'><a class='hasTip' title='".$lang->get($field[0]->placeholder)."'>".$lang->get($field[0]->label).$star."</a></label>";
                 if($field[0]->label != "") $html .= "<div class='controls'>";
-                $html .= "<textarea id='".$field[0]->id."' maxlength='".$field[0]->maxlength."' placeholder='".$field[0]->placeholder."' name='".$field[0]->name."' rows='".$field[0]->rows."' cols='".$field[0]->cols."' class='form-control' ".$disabled." ".$onchange.">".$default."</textarea>";
+                $html .= "<textarea id='".$field[0]->id."' maxlength='".$field[0]->maxlength."' placeholder='".$field[0]->placeholder."' name='".$field[0]->name."' rows='".$field[0]->rows."' cols='".$field[0]->cols."' class='form-control' ".$required." ".$disabled." ".$onchange.">".$default."</textarea>";
                 //$html .= "<span id='".$field[0]->name."-msg'></span>";
                 if($field[0]->label != "") $html .= "</div>";
                 $html .= "<div id='".$field[0]->name."Help' class='form-text'>".$lang->get($field[0]->message)."</div><div class='invalid-feedback'>".$lang->get($field[0]->invalid)."</div></div>";
@@ -496,13 +540,10 @@ class Html
 	 * @param $list object to fill the list field
 	 * @param $value string the value field for list fields
 	 * @param $key string the key field for list fields
-	 * @param $target string the modal url formmodal fields
-	 * @param $placeholder string a placeholder for modal fields
-	 * @param $uniqid string a uniqid for modal fields
 	 * @see https://github.com/Rhyzz/repeatable-fields
      * @return $html string a complete repeatable field
     */
-    function getRepeatable($form, $fields, $tmpl=null, $list, $value, $key, $target, $placeholder, $uniqid)
+    public function getRepeatable($form, $fields, $tmpl=null, $list, $value, $key)
     {
         $lang   = factory::getLanguage();
 
@@ -519,11 +560,12 @@ class Html
 				if($row['name'] == $field) {
 				$row[0]->width == '' ? $width = '40%' : $width = $row[0]->width;
 				if($row[0]->type == 'text') { $html .= "<td width='".$width."'>".$this->getTextField($form, $field)."</td>"; }
+                if($row[0]->type == 'date') { $html .= "<td width='".$width."'>".$this->getDateField($form, $field)."</td>"; }
+                if($row[0]->type == 'datetime') { $html .= "<td width='".$width."'>".$this->getDateTimeField($form, $field)."</td>"; }
 				if($row[0]->type == 'textarea') { $html .= "<td width='".$width."'>".$this->getTextareaField($form, $field)."</td>"; }
 				if($row[0]->type == 'list') { $html .= "<td width='".$width."'>".$this->getListField($form, $field, "", $list, $value, $key)."</td>"; }
 				if($row[0]->type == 'checkbox') { $html .= "<td width='".$width."'>".$this->getCheckboxField($form, $field)."</td>"; }
 				if($row[0]->type == 'radio') { $html .= "<td width='".$width."'>".$this->getRadioField($form, $field)."</td>"; }
-				if($row[0]->type == 'modal') { $html .= "<td width='".$width."'>".$this->getModalField($form, $field, '', $target, $placeholder, $uniqid)."</td>"; }
 				}
 			}
 		}
@@ -540,11 +582,12 @@ class Html
 						if($row['name'] == $field) {
 						$row[0]->width == '' ? $width = '40%' : $width = $row[0]->width;
 						if($row[0]->type == 'text') { $html .= "<td width='".$width."'>".$this->getTextField($form, $field, $item->$field)."</td>"; }
+                        if($row[0]->type == 'date') { $html .= "<td width='".$width."'>".$this->getDateField($form, $field)."</td>"; }
+                        if($row[0]->type == 'datetime') { $html .= "<td width='".$width."'>".$this->getDateTimeField($form, $field)."</td>"; }
 						if($row[0]->type == 'textarea') { $html .= "<td width='".$width."'>".$this->getTextareaField($form, $field, $item->$field)."</td>"; }
 						if($row[0]->type == 'list') { $html .= "<td width='".$width."'>".$this->getListField($form, $field, $item->$field, $list, $value, $key)."</td>"; }
 						if($row[0]->type == 'checkbox') { $html .= "<td width='".$width."'>".$this->getCheckboxField($form, $field, $item->$field)."</td>"; }
 						if($row[0]->type == 'radio') { $html .= "<td width='".$width."'>".$this->getRadioField($form, $field, $item->$field)."</td>"; }
-						if($row[0]->type == 'modal') { $html .= "<td width='".$width."'>".$this->getModalField($form, $field, '', $target, $placeholder, $uniqid)."</td>"; }
 						}
 					}
 				}
@@ -559,11 +602,12 @@ class Html
 					if($row['name'] == $field) {
 					$row[0]->width == '' ? $width = '40%' : $width = $row[0]->width;
 					if($row[0]->type == 'text') { $html .= "<td width='".$width."'>".$this->getTextField($form, $field)."</td>"; }
+                    if($row[0]->type == 'date') { $html .= "<td width='".$width."'>".$this->getDateField($form, $field)."</td>"; }
+                    if($row[0]->type == 'datetime') { $html .= "<td width='".$width."'>".$this->getDateTimeField($form, $field)."</td>"; }
 					if($row[0]->type == 'textarea') { $html .= "<td width='".$width."'>".$this->getTextareaField($form, $field)."</td>"; }
 					if($row[0]->type == 'list') { $html .= "<td width='".$width."'>".$this->getListField($form, $field, "", $list, $value, $key)."</td>"; }
 					if($row[0]->type == 'checkbox') { $html .= "<td width='".$width."'>".$this->getCheckboxField($form, $field)."</td>"; }
 					if($row[0]->type == 'radio') { $html .= "<td width='".$width."'>".$this->getRadioField($form, $field)."</td>"; }
-					if($row[0]->type == 'modal') { $html .= "<td width='".$width."'>".$this->getModalField($form, $field, '', $target, $placeholder, $uniqid)."</td>"; }
 					}
 				}
 			}
@@ -599,9 +643,11 @@ class Html
             if($field['name'] == $name) {
                 $field[0]->disabled == 'true' ? $disabled = "disabled='disabled'" : $disabled = "";
                 $field[0]->onchange != "" ? $onchange = "onchange='".$field[0]->onchange."'" : $onchange = "";
+                $field[0]->required == 'true' ? $required = "required='true'" : $required = "";
+                $field[0]->required == 'true' ? $star = " (*)" : $star = "";
                 $html .= "<div id='".$field[0]->name."-field' class='mb-3'>";
-                if($field[0]->label != "") $html .= "<label class='control-label' for='".$field[0]->id."'><a class='hasTip' title='".$lang->get($field[0]->placeholder)."'>".$lang->get($field[0]->label)."</a></label>";
-                $html .= "<select id='".$field[0]->id."' name='".$field[0]->name."' data-message='".$lang->get($field[0]->message)."' ".$onchange." class='".$class." form-control' ".$disabled.">";
+                if($field[0]->label != "") $html .= "<label class='control-label' for='".$field[0]->id."'><a class='hasTip' title='".$lang->get($field[0]->placeholder)."'>".$lang->get($field[0]->label).$star."</a></label>";
+                $html .= "<select id='".$field[0]->id."' name='".$field[0]->name."' data-message='".$lang->get($field[0]->message)."' ".$required." ".$onchange." class='".$class." form-control' ".$disabled.">";
 
                 $db->query('SELECT * FROM #_usergroups');
                 $rows = $db->fetchObjectList();
@@ -638,6 +684,8 @@ class Html
             if($field['name'] == $name) {
                 $field[0]->disabled == 'true' ? $disabled = "disabled='disabled'" : $disabled = "";
                 $field[0]->onchange != "" ? $onchange = "onchange='".$field[0]->onchange."'" : $onchange = "";
+                $field[0]->required == 'true' ? $required = "required='true'" : $required = "";
+                $field[0]->required == 'true' ? $star = " (*)" : $star = "";
                 if(isset($field[0]->multiple)){
                     $multiple[0] = "multiple ";
                     $multiple[1] = "[]";
@@ -650,8 +698,8 @@ class Html
                     $multiple[3] = "";
                 }
                 $html .= "<div id='".$field[0]->name."-field' class='mb-3'>";
-                if($field[0]->label != "") $html .= "<label class='control-label' for='".$field[0]->id."'><a class='hasTip' title='".$lang->get($field[0]->placeholder)."'>".$lang->get($field[0]->label)."</a></label>";
-                $html .= "<select id='".$field[0]->id."' ".$multiple[0]." name='".$field[0]->name.$multiple[1]."' data-message='".$lang->get($field[0]->message)."' ".$onchange." class='".$class." ".$multiple[2]." form-control' ".$disabled." ".$multiple[3].">";
+                if($field[0]->label != "") $html .= "<label class='control-label' for='".$field[0]->id."'><a class='hasTip' title='".$lang->get($field[0]->placeholder)."'>".$lang->get($field[0]->label).$star."</a></label>";
+                $html .= "<select id='".$field[0]->id."' ".$multiple[0]." name='".$field[0]->name.$multiple[1]."' data-message='".$lang->get($field[0]->message)."' ".$onchange." ".$required." class='".$class." ".$multiple[2]." form-control' ".$disabled." ".$multiple[3].">";
 
                 $db->query('SELECT id, username FROM #_users');
                 $rows = $db->fetchObjectList();
@@ -719,9 +767,11 @@ class Html
                     $multiple[3] = "";
                 }
                 $field[0]->onchange != "" ? $onchange = "onchange='".$field[0]->onchange."'" : $onchange = "";
+                $field[0]->required == 'true' ? $required = "required='true'" : $required = "";
+                $field[0]->required == 'true' ? $star = " (*)" : $star = "";
                 $html .= "<div id='".$field[0]->name."-field' class='".$input[0]."'>";
-                if($field[0]->label != "") $html .= "<label class='control-label' for='".$field[0]->id."'><a class='hasTip' title='".$lang->get($field[0]->placeholder)."'>".$lang->get($field[0]->label)."</a></label>";
-                $html .= "<select id='".$field[0]->id."' name='".$field[0]->name . $multiple[1] ."' ". $onchange . $multiple[0] ." class='custom-select ".$field[0]->classe." ". $class ." ". $input[1] ." ".$field[0]->classe. " ".  $multiple[2] ." form-control' ".$disabled. $multiple[3] .">";
+                if($field[0]->label != "") $html .= "<label class='control-label' for='".$field[0]->id."'><a class='hasTip' title='".$lang->get($field[0]->placeholder)."'>".$lang->get($field[0]->label).$star."</a></label>";
+                $html .= "<select id='".$field[0]->id."' name='".$field[0]->name . $multiple[1] ."' ".$required." ". $onchange . $multiple[0] ." class='custom-select ".$field[0]->classe." ". $class ." ". $input[1] ." ".$field[0]->classe. " ".  $multiple[2] ." form-control' ".$disabled. $multiple[3] .">";
 
                 //primer els options del xml
                 foreach($field[0]->option as $option) {
@@ -917,8 +967,10 @@ class Html
             if($field['name'] == $name) {
                 $field[0]->disabled == 'true' ? $disabled = "disabled='disabled'" : $disabled = "";
                 $field[0]->onchange != "" ? $onchange = "onchange='".$field[0]->onchange."'" : $onchange = "";
+                $field[0]->required == 'true' ? $required = "required='true'" : $required = "";
+                $field[0]->required == 'true' ? $star = " (*)" : $star = "";
                 $html .= "<div id='".$field[0]->name."-field' class='mb-3'>";
-                if($field[0]->label != "") $html .= "<label class='control-label' for='".$field[0]->id."'><a class='hasTip' title='".$lang->get($field[0]->placeholder)."'>".$lang->get($field[0]->label)."</a></label>";
+                if($field[0]->label != "") $html .= "<label class='control-label' for='".$field[0]->id."'><a class='hasTip' title='".$lang->get($field[0]->placeholder)."'>".$lang->get($field[0]->label).$star."</a></label>";
                 $html .= "<select multiple id='".$field[0]->id."' class='form-control' name='".$field[0]->name."[]' data-message='".$lang->get($field[0]->message)."' ".$onchange." ".$disabled.">";
                 $default == '*' ? $selected = 'selected' : $selected = '';
                 $html .= "<option value='*' $selected>Tots</option>";

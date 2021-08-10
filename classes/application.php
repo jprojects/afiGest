@@ -141,8 +141,8 @@ class Application
     */
     function decryptPassword($password, $hash)
     {
-      if (password_verify($password, $hash)) {
-			  return true;
+        if (password_verify($password, $hash)) {
+			return true;
   		} else {
   			return false;
   		}
@@ -277,38 +277,38 @@ class Application
         $user   = factory::getUser();
         $config = factory::getConfig();
         $db     = factory::getDatabase();
+        $lang   = factory::getLanguage();
 
         if($config->offline == 1 && (!$user->getAuth() && $user->level > 1)) { return 'offline.php'; }
-
-        //check permissions...
-        $db->query('SELECT views FROM `#_usergroups` WHERE id = '.$user->level);
-        $views = explode(',', $db->loadResult());
-        if($views[0] != '*') {
-            if($this->layout != null) {
-                if(!in_array($this->layout, $views)) {
-                    $this->setMessage('No tens permissos per veure aquesta secció', 'danger');
-                    $this->redirect($config->site.'/index.php?view=home');
-                }
-            }
-            if($this->view != 'home') {
-                if(!in_array($this->view, $views)) {
-                    $this->setMessage('No tens permissos per veure aquesta secció', 'danger');
-                    $this->redirect($config->site.'/index.php?view=home');
-                }
-            }
-        }
-
+        
         if($this->task != null) {
+     
             if(strpos($this->task, ".") !== false) {
+        
                 //task contains the model and the task separated by a dot
                 $parts = explode('.', $this->task);
                 $this->view = $parts[0];
                 $this->task = $parts[1];
             }
+        
             $model = $this->getModel();
             $model->{$this->task}();
 
         } else {
+
+            //check permissions
+            $groupId = $user->level;
+            $vista   = $this->view;
+            //A la DB si es tracta d'un layout entrarem la vista seguit de un punt i el nom del layout
+            if($this->layout != null) { $vista = $vista.'.'.$this->layout; }
+            $db->query('SELECT permisos FROM #_usergroups_map WHERE vista = '.$db->quote($vista));
+            $permisos = json_decode($db->loadResult());
+
+            if($permisos->access != 1) {
+                $this->setMessage($lang->get('CW_NOT_ALLOWED'), 'danger');
+                $this->redirect($config->site.'/index.php?view=home');
+                exit();
+            }
 
             $path = CWPATH_COMPONENT.DS.'views'.DS.$this->view.DS.'tmpl'.DS.$this->view.'.php';
             
@@ -317,6 +317,7 @@ class Application
             }
 
             if (is_file($path)) {
+
                 return $path;
             }  else {
                 http_response_code(404);
@@ -447,6 +448,7 @@ class Application
         } else {
             $path = 'template/'.$tmpl.'/index.php';
         }
+
         if (is_file($path)) {
             return $path;
         }  else {

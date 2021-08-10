@@ -97,21 +97,6 @@ CREATE TABLE IF NOT EXISTS `afi_config` (
 -- --------------------------------------------------------
 
 --
--- Estructura Stand-in para la vista `afi_facturacio`
--- (Véase abajo para la vista actual)
---
-CREATE TABLE IF NOT EXISTS `afi_facturacio` (
-`Projecte` varchar(150)
-,`Incidencia` varchar(255)
-,`data_incidencia` datetime
-,`data_resolucio` datetime
-,`temps_previst` int(5)
-,`temps_invertit` int(10)
-);
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `afi_hores`
 --
 
@@ -120,6 +105,7 @@ CREATE TABLE IF NOT EXISTS `afi_hores` (
   `userid` int(11) NOT NULL,
   `type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1 entrada; 0 sortida',
   `registre` datetime NOT NULL,
+  `ordering` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -288,10 +274,19 @@ CREATE TABLE IF NOT EXISTS `afi_usergroups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `parent_id` int(11) NOT NULL DEFAULT 0,
   `usergroup` varchar(50) NOT NULL,
-  `nou` tinyint(1) NOT NULL DEFAULT 0,
-  `editar` tinyint(1) NOT NULL DEFAULT 0,
-  `esborrar` tinyint(1) NOT NULL DEFAULT 0,
-  `views` varchar(250) NOT NULL DEFAULT '*',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `afi_usergroups_map`
+--
+
+CREATE TABLE IF NOT EXISTS `afi_usergroups_map` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `groupId` int(11) NOT NULL DEFAULT 0,
+  `params` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -320,23 +315,7 @@ CREATE TABLE IF NOT EXISTS `afi_users` (
   `poblacio` varchar(100) NOT NULL DEFAULT '',
   `template` varchar(50) NOT NULL DEFAULT '',
   `apikey` varchar(150) NOT NULL DEFAULT '',
-  `projects` varchar(250) NOT NULL DEFAULT '',
-  `coins` int(11) NOT NULL DEFAULT 0,
-  `wallet` varchar(150) NOT NULL DEFAULT '',
-  `dashboard_pref` text NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
-
---
--- Estructura para la vista `afi_facturacio`
---
-DROP TABLE IF EXISTS `afi_facturacio`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`afigest_usr`@`%` SQL SECURITY DEFINER VIEW `afi_facturacio`  AS SELECT `P`.`nom` AS `Projecte`, `I`.`nom` AS `Incidencia`, `I`.`data_incidencia` AS `data_incidencia`, `I`.`data_resolucio` AS `data_resolucio`, `I`.`temps_previst` AS `temps_previst`, `I`.`temps_invertit` AS `temps_invertit` FROM (`afi_incidencies` `I` join `afi_projectes` `P` on(`I`.`projecteId` = `P`.`projecte_id`)) WHERE `I`.`estat` = 3 AND `I`.`data_factura` = '0000-00-00 00:0:00' ORDER BY `P`.`nom` ASC, `I`.`data_incidencia` ASC, `I`.`data_resolucio` ASC, `I`.`temps_previst` ASC, `I`.`temps_invertit` ASC ;
-
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
